@@ -32,8 +32,16 @@
                     <h1>Pagina Ecommerce DH Grupo II</h1>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda nulla aspernatur aliquid!</p>
                     <div class="hero-buttons">
-                        <a href="{{route('product-manager.index')}}" class="button button-white">Login</a>
-                        <a href="#" class="button button-white">Sing in</a>
+
+                        @if(Auth::user()!=null)
+                            <a href="{{route('product-manager.index')}}" class="button button-white">Admin</a>
+                            <a href="{{route('logout')}}" class="button button-white" onclick=" return confirm('Esta seguro de que desea cerrar sesión?');">Logout</a>
+                        @else
+
+                            <a href="{{route('product-manager.index')}}" class="button button-white">Login</a>
+                            <a href="{{route('register')}}" class="button button-white">Sign In</a>
+                        @endif
+                        
                     </div>
                 </div> <!-- end hero-copy -->
 
@@ -66,7 +74,7 @@
 
                 <div class="products text-center">
                     @foreach ($products as $product)
-                        <div class="product">
+                        <div class="product">               
                             <a href="{{ route('shop.show',$product->id)}}"><img src="{{ asset('/storage/storage/product-img/'.$product->image) }}" alt="product"></a>
                             <a href="{{ route('shop.show',$product->id)}}"><div class="product-name">{{$product->name}}</div></a>
                             <div class="product-price">{{$product->presentPrice()}}</div>
@@ -113,3 +121,4 @@
 
     </body>
 </html>
+

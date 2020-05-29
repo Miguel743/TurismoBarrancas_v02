@@ -20,24 +20,53 @@
         <div class="sidebar">
             <h3>Por Categoria</h3>
             <ul>
-                <li><a href="#">Spa</a></li>
-                <li><a href="#">Mochilero</a></li>
-                <li><a href="#">All Inclusive</a></li>
-                <li><a href="#">Aventura</a></li>
-                <li><a href="#">Cabalgata</a></li>
-                <li><a href="#">Saltar en Paracaidas</a></li>
-                <li><a href="#">Turismo Culinario</a></li>
+                @if(!(isset($selectedCategory)))
+                    <li style="font-weight: bold; text-decoration: underline;"><a href="{{ url('/shop') }}">Todo</a>
+                @else
+                    <li><a href="{{ url('/shop') }}">Todo</a>
+                @endif
+
+                @foreach ($categories as $category)
+                    @if($category==$selectedCategory)
+                        <li style="font-weight: bold; text-decoration: underline;">
+                    @else
+                        <li>
+                    @endif
+                            <a href="{{ route('shop.filterByCategory',$category->id)}}">{{$category->name}}</a>
+                        </li>
+                @endforeach
             </ul>
+            
 
             <h3>Por Precios</h3>
             <ul>
-                <li><a href="#">$0 - $3500</a></li>
-                <li><a href="#">$3500 - $7500</a></li>
-                <li><a href="#">$7500+</a></li>
+
+                @if(!(isset($selectedPriceTag)))
+                    <li style="font-weight: bold; text-decoration: underline;"><a href="{{ url('/shop') }}">Todo</a>
+                @else
+                    <li><a href="{{ url('/shop') }}">Todo</a>
+                @endif
+
+                @foreach ($priceTags as $priceTag)
+                    @if($priceTag==$selectedPriceTag)
+                        <li style="font-weight: bold; text-decoration: underline;">
+                    @else
+                        <li>
+                    @endif
+                            <a href="{{ route('shop.filterByPrice',$priceTag->id)}}">{{$priceTag->presentMinTagPrice()}} - {{$priceTag->presentMaxTagPrice()}}</a>
+                        </li>
+                @endforeach
+
             </ul>
         </div> <!-- end sidebar -->
         <div>
-            <h1 class="stylish-heading">All Inclusive</h1>
+
+            @if(isset($selectedCategory))
+                <h1 class="stylish-heading">{{$selectedCategory->name}}</h1>
+            @else
+                <h1 class="stylish-heading">Todos los productos</h1>
+            @endif
+
             <div class="products text-center">
 
                 @foreach ($products as $product)
@@ -58,9 +87,12 @@
             
         </div>
     </div>
+    
 
-
-
- 
+    {{-- <script>
+        function boldButton(btn){
+            btn.style.fontWeight =  '700';
+        }
+    </script> --}}
 
 @endsection
