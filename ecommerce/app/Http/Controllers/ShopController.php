@@ -23,7 +23,7 @@ class ShopController extends Controller
         $categories = Category::where('active','!=','0')->get();
         $selectedCategory=null;
         
-        $priceTags=PriceTag::all();
+        $priceTags=PriceTag::All();
         $selectedPriceTag=null;
         
 
@@ -73,6 +73,7 @@ class ShopController extends Controller
 
         $priceTags=PriceTag::all();
         $selectedPriceTag=null;
+        
 
         return view('shop')
             ->with([
@@ -80,7 +81,7 @@ class ShopController extends Controller
                 'categories'=>$categories,
                 'priceTags'=>$priceTags,
                 'selectedCategory'=>$selectedCategory,
-                'selectedPriceTags'=>$selectedPriceTag,
+                'selectedPriceTag'=>$selectedPriceTag,
             ]);
 
     }
